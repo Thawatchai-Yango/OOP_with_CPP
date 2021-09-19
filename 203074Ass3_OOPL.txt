@@ -1,0 +1,417 @@
+/*
+ * book.cpp
+ *
+ *  Created on: 18-Jul-2017
+ *  Author: thawatchai yango SE COMP B
+ *  Roll No:203074 BATCH E
+ *  Assignment 2
+ *  Problem Statement
+ *  Book shop maintains inventory of books that are sold at the shop.The list
+ *  includes details such as author, title, publisher, and stock position.
+ *  Whenever a customer wants a book,the sales person inputs the titleand author
+ *  and the system searches the list and displaying whether  it iavailable or not.
+ *  If is it not, an appropriated is displayed. If is is, then the system shows
+ *  book details and requests for required in stock. If the copies areavailable,
+ *  the total cost of the requests otherwise the message is required copy is not
+ *  in stock is displayed. Desire using class books() with suitablemember functions
+ *  and constructors to all implement c++ program.
+ */
+#include<iostream>
+#include<string.h>
+#include<stdlib.h>
+
+using namespace std;
+class book
+{
+
+ 		char author[20]; 
+ 		char title[20];
+ 		char publisher[20];
+ 		double price;
+		 int stock;
+    public:
+      		book();    
+    void insertdata();
+    void display();
+    int search(char[],char[]);
+    void nocopies(int);     
+};
+  			book::book()
+  {
+   		char *author=new char[50];
+   		char *title=new char[50];
+   		char *publisher=new char[50];
+   		price=0;
+   		stock=0;
+   }
+    void book::insertdata()
+         {
+  		cout<<"\n ENTER THE TITLE OF THE BOOK:";
+  			cin>>title;
+  		cout<<"\n ENTER THE AUTHOR OF THE BOOK::";
+  			cin>>author;
+ 		cout<<"\n ENTER THE PUBLISHER OF THE BOOK::";
+ 			cin>>publisher;
+  		cout<<"\n ENTER THE PRICE OF THE BOOK::";
+  			cin>>price;
+ 		cout<<"\n ENTER THE NUMBER OF STOCK::";
+  			cin>>stock;
+ }
+
+
+  void book::display()
+ {
+ 		cout<<"\n "<< title<<"\t "<<author<<"\t  "<<publisher<<" \t "<<price<<"\t "<<stock;
+        }
+  int book::search(char t[],char a[])
+  {
+       if(strcmp(title,t)&&(strcmp(author,a)))
+ {
+ return 0;
+ }
+ else
+ {
+ return 1;
+ }
+  }
+
+ 	void book::nocopies(int num)
+{
+if(stock>=num)
+{
+		cout<<"\n STOCK IS AVAILABLE";
+		cout<<"\n\n THE PRICE OF THE BOOK IS Rs.   ::"<<(price*num)<<" RUPEES";
+		cout<<"\n THE REMAINING STOCK LEFT IS/ARE::"<<(stock-num)<<" BOOKS";
+		
+}
+else
+{
+		cout<<"\n REQUIED COPIES NOT IN STOCK!!";
+}
+}
+int main()
+{
+ int ch,n,i,flag=0,copies,key=0;
+        book b[100];
+        char bname[50];
+        char key_title[50],key_author[50];
+        char opt;
+        
+   do
+    {
+ 		cout<<"\n:::::::::::::WELCOME TO BOOK STORE::::::::::::::"; 
+ 		cout<<"::\n::\t\t\t\t\t\t::\n::\t\t\t\t\t\t::\n:: 1.INSERT DETAILS OF THE BOOK\t\t\t::\n::\t\t\t\t\t\t::\n::\t\t\t\t\t\t::\n:: 2.DISPLAY \t\t\t\t\t::\n::\t\t\t\t\t\t::\n::\t\t\t\t\t\t::\n:: 3.PURCHASE \t\t\t\t\t::\n::\t\t\t\t\t\t::\n::\t\t\t\t\t\t::\n:: 4.EXIT\t\t\t\t\t::\n::\t\t\t\t\t\t::\n::::::::::::::::::::::::::::::::::::::::::::::::::";
+		cout<<"\n\n ENTER YOUR CHOICE:";
+			 cin>>ch;
+ switch(ch)
+  {
+        case 1:
+                    cout<<"\n HOW MANY BOOKS DATA YOU WANT TO ENTER::";
+                    	cin>>n;
+                    for(i=0;i<n;i++)
+                      {
+                       b[i].insertdata();
+   }
+                     break;
+        case 2:
+                    cout<<"\n"<<"TITLE  "<<"\t"<<"AUTHOR   "<<"\t"<<"PUBLISHER"<<"\t"<<"PRICE  "<<"\t"<<"STOCK";
+                    for(i=0;i<n;i++)
+    {
+                    cout<<"\n";
+   
+         b[i].display();   
+     }
+   
+                        break;
+                    
+        case 3:
+                    cout<<"\n ENTER THE TITLE OF BOOKS::";
+                        cin>>key_title;
+                    cout<<"\n ENTER THE AUTHOR OF THIS BOOK::";
+                        cin>>key_author;
+                             
+                            for(i=0;i<n;i++)
+                          {
+                              if(b[i].search(key_title,key_author))
+                               {
+                                  flag=1;
+					cout<<"\n"<<"TITLE  "<<"\t"<<"AUTHOR   "<<"\t"<<"PUBLISHER"<<"\t"<<"PRICE  "<<"\t"<<"STOCK";
+                                  b[i].display();                        
+    //break;
+    key=i;
+            }
+    }
+   if(flag==1)                          
+    				cout<<"\n\n ****YOU ARE LUCKY!! YOUR BOOK IS IN STOCK NOW!****";
+   else
+ {
+     				cout<<"\n\n ****WE ARE SORRY! THE BOOK YOU WISH IS OUT OF STOCK OR TITLE NOT FOUND!****";
+        break;
+ }        
+              if(flag==1)
+                      {
+                    cout<<"\n\n PLEASE ENTER THE REQUIRED NUMBER OF COPIES OF THE BOOK::";
+                    	cin>>copies;
+                      b[key].nocopies(copies);
+                     }
+                   
+                     break;
+                     
+        case 4: exit(EXIT_SUCCESS);
+   
+   break;
+  default :
+                    cout<<"\n WRONG CHOICE!!!";
+                       break;
+ }   
+ 					
+ }while(ch!=5);
+  
+ return 0;
+} 
+
+OUTPUT:
+
+:::::::::::::WELCOME TO BOOK STORE::::::::::::::::
+::                                              ::
+::                                              ::
+:: 1.INSERT DETAILS OF THE BOOK                 ::
+::                                              ::
+::                                              ::
+:: 2.DISPLAY                                    ::
+::                                              ::
+::                                              ::
+:: 3.PURCHASE                                   ::
+::                                              ::
+::                                              ::
+:: 4.EXIT                                       ::
+::                                              ::
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+ ENTER YOUR CHOICE:6
+
+ WRONG CHOICE!!!
+:::::::::::::WELCOME TO BOOK STORE::::::::::::::::
+::                                              ::
+::                                              ::
+:: 1.INSERT DETAILS OF THE BOOK                 ::
+::                                              ::
+::                                              ::
+:: 2.DISPLAY                                    ::
+::                                              ::
+::                                              ::
+:: 3.PURCHASE                                   ::
+::                                              ::
+::                                              ::
+:: 4.EXIT                                       ::
+::                                              ::
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+ ENTER YOUR CHOICE:1
+
+ HOW MANY BOOKS DATA YOU WANT TO ENTER::4
+
+ ENTER THE TITLE OF THE BOOK:OOPL
+
+ ENTER THE AUTHOR OF THE BOOK::TEACHER
+
+ ENTER THE PUBLISHER OF THE BOOK::MITPUNE
+
+ ENTER THE PRICE OF THE BOOK::1235
+
+ ENTER THE NUMBER OF STOCK::1000
+
+ ENTER THE TITLE OF THE BOOK:DELE
+
+ ENTER THE AUTHOR OF THE BOOK::TEACHER2
+
+ ENTER THE PUBLISHER OF THE BOOK::MITPUNE
+
+ ENTER THE PRICE OF THE BOOK::2631
+
+ ENTER THE NUMBER OF STOCK::1000
+
+ ENTER THE TITLE OF THE BOOK:COA
+
+ ENTER THE AUTHOR OF THE BOOK::TEACHER3
+
+ ENTER THE PUBLISHER OF THE BOOK::MITPUNE
+
+ ENTER THE PRICE OF THE BOOK::3215
+
+ ENTER THE NUMBER OF STOCK::1000
+
+ ENTER THE TITLE OF THE BOOK:DSLA
+
+ ENTER THE AUTHOR OF THE BOOK::TEACHER4
+
+ ENTER THE PUBLISHER OF THE BOOK::MITPUNE
+
+ ENTER THE PRICE OF THE BOOK::1111
+
+ ENTER THE NUMBER OF STOCK::1000
+
+:::::::::::::WELCOME TO BOOK STORE::::::::::::::::
+::                                              ::
+::                                              ::
+:: 1.INSERT DETAILS OF THE BOOK                 ::
+::                                              ::
+::                                              ::
+:: 2.DISPLAY                                    ::
+::                                              ::
+::                                              ::
+:: 3.PURCHASE                                   ::
+::                                              ::
+::                                              ::
+:: 4.EXIT                                       ::
+::                                              ::
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+ ENTER YOUR CHOICE:2
+
+TITLE   AUTHOR          PUBLISHER       PRICE   STOCK
+
+ OOPL    TEACHER          MITPUNE        1235    1000
+
+ DELE    TEACHER2         MITPUNE        2631    1000
+
+ COA     TEACHER3         MITPUNE        3215    1000
+
+ DSLA    TEACHER4         MITPUNE        1111    1000
+:::::::::::::WELCOME TO BOOK STORE::::::::::::::::
+::                                              ::
+::                                              ::
+:: 1.INSERT DETAILS OF THE BOOK                 ::
+::                                              ::
+::                                              ::
+:: 2.DISPLAY                                    ::
+::                                              ::
+::                                              ::
+:: 3.PURCHASE                                   ::
+::                                              ::
+::                                              ::
+:: 4.EXIT                                       ::
+::                                              ::
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+ ENTER YOUR CHOICE:3
+
+ ENTER THE TITLE OF BOOKS::OOPL
+
+ ENTER THE AUTHOR OF THIS BOOK::TEACHER
+
+TITLE   AUTHOR          PUBLISHER       PRICE   STOCK
+ OOPL    TEACHER          MITPUNE        1235    1000
+
+ ****YOU ARE LUCKY!! YOUR BOOK IS IN STOCK NOW!****
+
+ PLEASE ENTER THE REQUIRED NUMBER OF COPIES OF THE BOOK::250
+
+ STOCK IS AVAILABLE
+
+ THE PRICE OF THE BOOK IS Rs.   ::308750 RUPEES
+ THE REMAINING STOCK LEFT IS/ARE::750 BOOKS
+:::::::::::::WELCOME TO BOOK STORE::::::::::::::::
+::                                              ::
+::                                              ::
+:: 1.INSERT DETAILS OF THE BOOK                 ::
+::                                              ::
+::                                              ::
+:: 2.DISPLAY                                    ::
+::                                              ::
+::                                              ::
+:: 3.PURCHASE                                   ::
+::                                              ::
+::                                              ::
+:: 4.EXIT                                       ::
+::                                              ::
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+ ENTER YOUR CHOICE:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
